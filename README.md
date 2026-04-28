@@ -51,7 +51,15 @@ Les données des parties sont enregistrées dans un fichier CSV.
 - Taille de la carte  
 - Position des bombes  
 
----
+
+## ⚙️ Arborescence du Projet
+
+📦 Projet
+┣ 📜 main.py
+┣ 📜 données.csv
+┗ 📂 cogs
+   ┣ 📜 moteurdejeu.py
+   ┗ 📜 stockagedonnée.py
 
 ## 🧠 Notions de NSI utilisées
 
