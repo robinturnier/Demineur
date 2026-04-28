@@ -54,12 +54,12 @@ Les données des parties sont enregistrées dans un fichier CSV.
 
 ## ⚙️ Arborescence du Projet
 
-📦 Projet
-┣ 📜 main.py
-┣ 📜 données.csv
-┗ 📂 cogs
-   ┣ 📜 moteurdejeu.py
-   ┗ 📜 stockagedonnée.py
+📁 Projet
+├── 📄 main.py
+├── 📄 données.csv
+└── 📁 cogs
+    ├── 📄 moteurdejeu.py
+    └── 📄 stockagedonnée.py
 
 ## 🧠 Notions de NSI utilisées
 
