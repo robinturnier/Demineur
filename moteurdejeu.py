@@ -1,70 +1,152 @@
 import random
 from tkinter import *
 
-def generer_grille(difficulte):
-    if difficulte == 1:
-        taille_grille = 9
-        nombre_de_bombe = 10
-        nombre_de_drapeau = 10
-    elif difficulte == 2:
-        taille_grille = 16
-        nombre_de_bombe = 40
-        nombre_de_drapeau = 40
-    elif difficulte == 3:
-        taille_grille = 20
-        nombre_de_bombe = 85
-        nombre_de_drapeau = 85
+# ----------------- PARAMÈTRES -----------------
 
+taille_grille = 9
+nombre_bombes = 10
+
+jeu_termine = False
+
+# ----------------- GRILLE -----------------
+
+def generer_grille():
     grille = [[0 for _ in range(taille_grille)] for _ in range(taille_grille)]
 
-    nombre_de_bombe_place = 0
-    while nombre_de_bombe_place < nombre_de_bombe:
+    bombes_placees = 0
+
+    while bombes_placees < nombre_bombes:
         x = random.randint(0, taille_grille - 1)
         y = random.randint(0, taille_grille - 1)
 
-        if grille[y][x] != 1:
+        if grille[y][x] == 0:
             grille[y][x] = 1
-            nombre_de_bombe_place += 1
+            bombes_placees += 1
 
-    return grille, taille_grille, nombre_de_drapeau
-
-
-def poser_drapeau():
-    global nombre_de_drapeau
-    if nombre_de_drapeau > 0:
-        nombre_de_drapeau -= 1
-        label_drapeau.config(text=nombre_de_drapeau)
+    return grille
 
 
-def afficher_grille(fenetre, grille, taille_grille):
-    global label_drapeau
+# ----------------- COMPTER BOMBES -----------------
 
-    label_drapeau = Label(fenetre, text=nombre_de_drapeau)
-    label_drapeau.grid(row=0, column=0, columnspan=taille_grille)
+def compter_bombes_autour(x, y):
+    total = 0
 
-    for y, ligne in enumerate(grille):
-        for x, case in enumerate(ligne):
+    for dy in [-1, 0, 1]:
+        for dx in [-1, 0, 1]:
+
+            nx = x + dx
+            ny = y + dy
+
+            if 0 <= nx < taille_grille and 0 <= ny < taille_grille:
+                if grille[ny][nx] == 1:
+                    total += 1
+
+    return total
+
+
+# ----------------- FLOOD (OUVERTURE CASES VIDES) -----------------
+
+def ouvrir_cases_vides(x, y):
+    for dy in [-1, 0, 1]:
+        for dx in [-1, 0, 1]:
+
+            nx = x + dx
+            ny = y + dy
+
+            if 0 <= nx < taille_grille and 0 <= ny < taille_grille:
+
+                bouton = boutons[ny][nx]
+
+                if bouton["state"] == "normal" and bouton["text"] != "🚩":
+
+                    if grille[ny][nx] == 0:
+                        nb = compter_bombes_autour(nx, ny)
+
+                        bouton.config(state="disabled", bg="lightgrey")
+
+                        if nb > 0:
+                            bouton.config(text=str(nb))
+
+
+# ----------------- REVELER CASE -----------------
+
+def reveler_case(x, y):
+    global jeu_termine
+
+    if jeu_termine:
+        return
+
+    bouton = boutons[y][x]
+
+    if bouton["state"] == "disabled" or bouton["text"] == "🚩":
+        return
+
+    # bombe
+    if grille[y][x] == 1:
+        bouton.config(text="💣", bg="red")
+        jeu_termine = True
+        print("💥 GAME OVER")
+        return
+
+    nb = compter_bombes_autour(x, y)
+
+    bouton.config(state="disabled", bg="lightgrey")
+
+    if nb > 0:
+        bouton.config(text=str(nb))
+    else:
+        bouton.config(text="")
+        ouvrir_cases_vides(x, y)
+
+
+# ----------------- DRAPEAU -----------------
+
+def poser_drapeau(event, x, y):
+    if jeu_termine:
+        return
+
+    bouton = boutons[y][x]
+
+    if bouton["state"] == "disabled":
+        return
+
+    if bouton["text"] == "🚩":
+        bouton.config(text="🟩")
+    else:
+        bouton.config(text="🚩")
+
+
+# ----------------- INTERFACE -----------------
+
+def creer_grille_interface():
+    for y in range(taille_grille):
+        ligne_boutons = []
+
+        for x in range(taille_grille):
+
             bouton = Button(
                 fenetre,
                 text="🟩",
                 width=3,
-                relief="raised",
-                command=poser_drapeau
+                command=lambda x=x, y=y: reveler_case(x, y)
             )
-            bouton.grid(row=y+1, column=x)
+
+            bouton.bind("<Button-3>", lambda e, x=x, y=y: poser_drapeau(e, x, y))
+
+            bouton.grid(row=y, column=x)
+            ligne_boutons.append(bouton)
+
+        boutons.append(ligne_boutons)
 
 
-def initialisation():
-    global nombre_de_drapeau
+# ----------------- LANCEMENT -----------------
 
-    fenetre = Tk()
-    fenetre.title("Démineur")
+fenetre = Tk()
+fenetre.title("Démineur")
 
-    grille, taille_grille, nombre_de_drapeau = generer_grille(1)
+grille = generer_grille()
+boutons = []
 
-    afficher_grille(fenetre, grille, taille_grille)
+creer_grille_interface()
 
-    fenetre.mainloop()
-
-
-initialisation()
+fenetre.mainloop()
