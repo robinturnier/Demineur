@@ -2,72 +2,82 @@
 
 ## 📌 Description
 Ce projet a été réalisé dans le cadre de la spécialité NSI en classe de Première.  
-Il consiste à développer un jeu inspiré du démineur, en réutilisant plusieurs notions vues en cours comme les matrices, les structures de données et la gestion de fichiers.
+Il s’agit d’une version simplifiée du jeu du démineur développée en Python avec une interface graphique.
+
+L’objectif est de réinvestir les notions de programmation vues en cours à travers un projet concret et interactif.
 
 ---
 
 ## 🎮 Fonctionnement du jeu
 
-- Une grille carrée (x × x) est générée aléatoirement selon la difficulté choisie  
-- Des bombes sont cachées dans certaines cases  
-- Le joueur dispose d’un nombre limité de drapeaux pour marquer les cases suspectes  
+- Une grille carrée (9 × 9) est générée aléatoirement
+- 10 bombes sont placées de manière aléatoire sur la grille
+- Le joueur clique sur les cases pour les révéler
 
-### 🔍 Actions possibles
-- Cliquer sur une case pour la révéler  
-- Placer un drapeau pour signaler une bombe potentielle  
+### 🔍 Principe du jeu
+- Si la case contient une bombe 💣 → la partie est perdue
+- Sinon, un nombre s’affiche indiquant le nombre de bombes présentes dans les cases voisines
 
-### 📊 Indications
-Lorsqu’une case est révélée :
-- Un nombre s’affiche indiquant le nombre de bombes dans les cases voisines  
-- Le calcul se fait sur une zone de 3×3 autour de la case  
-
-### 🏁 Conditions de fin
-- Victoire : toutes les bombes sont correctement identifiées  
-- Défaite : une bombe est déclenchée  
+Le calcul est effectué sur une zone de 3×3 autour de la case cliquée.
 
 ---
 
 ## ⚙️ Moteur du jeu
 
-- Langage : Python  
-- Interface graphique : tkinter  
+- Langage : Python
+- Bibliothèque graphique : tkinter
+- Génération aléatoire : module `random`
 
 ### Fonctionnalités principales
-- Génération aléatoire des cartes  
-- Gestion des interactions utilisateur  
-- Utilisation de matrices pour représenter la grille  
-- Calcul des cases voisines  
+- Création dynamique d’une grille de boutons
+- Placement aléatoire des bombes
+- Gestion des clics utilisateur
+- Calcul des bombes adjacentes
+- Fin de partie en cas de bombe déclenchée
 
 ---
 
-## 💾 Stockage des données
+## 🧠 Structures de données utilisées
 
-Les données des parties sont enregistrées dans un fichier CSV.
+- **Matrices (listes 2D)** :
+  - `grille` → stocke les bombes (0 ou 1)
+  - `boutons` → stocke les boutons de l’interface
 
-### Données stockées
-- Nombre de bombes  
-- Nombre de drapeaux utilisés  
-- Nombre de drapeaux disponibles  
-- Taille de la carte  
-- Position des bombes  
+Chaque position `[y][x]` correspond à une case du jeu.
 
+---
 
-## ⚙️ Arborescence du Projet
+## 🖥️ Interface graphique
+
+L’interface est construite avec `tkinter` :
+- Chaque case est un bouton
+- Un clic déclenche la révélation de la case
+- Les cases révélées changent de couleur et affichent une valeur
+
+---
+
+## 📁 Organisation du projet
 
 📁 Projet
-├── 📄 main.py
-├── 📄 données.csv
-└── 📁 cogs
-    ├── 📄 moteurdejeu.py
-    └── 📄 stockagedonnée.py
+├── main.py   # Code principal du jeu
+
+---
 
 ## 🧠 Notions de NSI utilisées
 
-- Listes et matrices  
-- Dictionnaires  
-- Lecture et écriture de fichiers CSV  
-- Algorithmes de parcours  
-- Interface graphique  
+- Listes et listes 2D (matrices)
+- Conditions et boucles imbriquées
+- Algorithmes de parcours de grille
+- Gestion d’événements (clics souris)
+- Interface graphique avec tkinter
+- Utilisation de fonctions et variables globales
 
 ---
 
+## 🚀 Améliorations possibles
+
+- Ajout de drapeaux 🚩
+- Révélation automatique des zones vides
+- Compteur de temps
+- Système de victoire
+- Choix de difficulté (taille + bombes)
