@@ -69,11 +69,11 @@ def reveler_case(x, y):
 
     if bouton["state"] == "disabled":
         return
-
-    if bouton["text"] == "🚩":
-        return
-
     if not mode_drapeau:
+        if bouton["text"] == "🚩":
+            return
+
+    
 
         if grille[y][x] == 1:
             bouton.config(text="💣", bg="red")
@@ -190,4 +190,3 @@ boutons = []
 creer_interface()
 
 fenetre.mainloop()
-
