@@ -2,82 +2,115 @@
 
 ## 📌 Description
 Ce projet a été réalisé dans le cadre de la spécialité NSI en classe de Première.  
-Il s’agit d’une version simplifiée du jeu du démineur développée en Python avec une interface graphique.
+Il s’agit d’une version fonctionnelle du jeu du démineur développée en Python avec une interface graphique.
 
-L’objectif est de réinvestir les notions de programmation vues en cours à travers un projet concret et interactif.
+Le but est de reproduire les mécaniques principales du jeu tout en appliquant les notions vues en cours.
 
 ---
 
 ## 🎮 Fonctionnement du jeu
 
 - Une grille carrée (9 × 9) est générée aléatoirement
-- 10 bombes sont placées de manière aléatoire sur la grille
-- Le joueur clique sur les cases pour les révéler
+- 10 bombes sont placées sur la grille
+- Le joueur interagit avec les cases via des boutons
 
-### 🔍 Principe du jeu
-- Si la case contient une bombe 💣 → la partie est perdue
-- Sinon, un nombre s’affiche indiquant le nombre de bombes présentes dans les cases voisines
+---
 
-Le calcul est effectué sur une zone de 3×3 autour de la case cliquée.
+## 🔍 Principe du jeu
+
+- 💣 Bombe → défaite immédiate
+- 🔢 Nombre → indique le nombre de bombes autour
+- ⬜ Case vide → déclenche une cascade automatique
+
+### 💡 Détails importants
+- Le calcul des bombes se fait sur les 8 cases autour (zone 3×3)
+- Les cases vides révèlent automatiquement leurs voisines
+- Les cases déjà révélées ne peuvent pas être recliquées
+
+---
+
+## 🚩 Système de drapeaux
+
+Un mode "drapeau" est disponible :
+
+- Activation via une case à cocher
+- Permet de poser/enlever un drapeau 🚩
+- Nombre de drapeaux limité au nombre de bombes
+- Indispensable pour gagner
+
+---
+
+## 🏆 Condition de victoire
+
+Le joueur gagne si :
+
+- Toutes les cases sans bombe sont révélées  
+ET  
+- Toutes les bombes sont correctement marquées avec un drapeau 🚩
 
 ---
 
 ## ⚙️ Moteur du jeu
 
-- Langage : Python
-- Bibliothèque graphique : tkinter
+- Langage : Python  
+- Interface graphique : tkinter  
 - Génération aléatoire : module `random`
-
-### Fonctionnalités principales
-- Création dynamique d’une grille de boutons
-- Placement aléatoire des bombes
-- Gestion des clics utilisateur
-- Calcul des bombes adjacentes
-- Fin de partie en cas de bombe déclenchée
 
 ---
 
-## 🧠 Structures de données utilisées
+## ⚡ Fonctionnalités implémentées
 
-- **Matrices (listes 2D)** :
-  - `grille` → stocke les bombes (0 ou 1)
-  - `boutons` → stocke les boutons de l’interface
+- Génération dynamique de la grille
+- Placement aléatoire des bombes
+- Révélation des cases
+- Affichage du nombre de bombes adjacentes
+- Cascade automatique des zones vides
+- Mode drapeau activable
+- Gestion du nombre de drapeaux
+- Détection de victoire
+- Détection de défaite + affichage des bombes
 
-Chaque position `[y][x]` correspond à une case du jeu.
+---
+
+## 🧠 Structures de données
+
+- Liste 2D (`grille`)  
+  → contient les bombes (0 = vide, 1 = bombe)
+
+- Liste 2D (`boutons`)  
+  → contient les boutons tkinter
+
+Chaque case est accessible via `[y][x]`.
 
 ---
 
 ## 🖥️ Interface graphique
 
-L’interface est construite avec `tkinter` :
-- Chaque case est un bouton
-- Un clic déclenche la révélation de la case
-- Les cases révélées changent de couleur et affichent une valeur
+- Chaque case est un bouton 🟩
+- Couleurs dynamiques :
+  - Bleu → 1
+  - Vert → 2
+  - Rouge → 3
+- Bombe affichée en 💣
+- Drapeau affiché en 🚩
 
 ---
 
 ## 📁 Organisation du projet
 
-📁 Projet
-├── main.py   # Code principal du jeu
+📁 Projet  
+├── main.py   # Code principal du jeu  
 
 ---
 
 ## 🧠 Notions de NSI utilisées
 
-- Listes et listes 2D (matrices)
-- Conditions et boucles imbriquées
-- Algorithmes de parcours de grille
-- Gestion d’événements (clics souris)
+- Listes et matrices (2D)
+- Parcours de grille
+- Conditions / boucles imbriquées
+- Gestion d’événements (clics)
 - Interface graphique avec tkinter
-- Utilisation de fonctions et variables globales
+- Fonctions et variables globales
 
 ---
 
-## 🚀 Améliorations possibles
-
-- Ajout de drapeaux 🚩
-- Révélation automatique des zones vides
-- Compteur de temps
-- Système de victoire
-- Choix de difficulté (taille + bombes)
