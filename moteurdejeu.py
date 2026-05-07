@@ -101,14 +101,14 @@ def reveler_case(x, y):
         else:
             bouton.config(text="")
 
-            # cascade simple
-            for dy in [-1,0,1]:
-                for dx in [-1,0,1]:
-                    nx = x + dx
-                    ny = y + dy
-                    if 0 <= nx < taille_de_la_grille and 0 <= ny < taille_de_la_grille:
-                        if boutons[ny][nx]["state"] != "disabled":
-                            reveler_case(nx, ny)
+            if nb == 0:# cascade simple , nb==0 permet d'eviter une cascade trop importante
+                for dy in [-1,0,1]:
+                    for dx in [-1,0,1]:
+                        nx = x + dx
+                        ny = y + dy
+                        if 0 <= nx < taille_de_la_grille and 0 <= ny < taille_de_la_grille:
+                            if boutons[ny][nx]["state"] != "disabled":
+                                reveler_case(nx, ny)
 
     else:
         if bouton["text"] == "🚩":
