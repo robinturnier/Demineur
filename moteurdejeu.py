@@ -103,7 +103,6 @@ def gagner():
                 ok += 1
             elif grille[i][j] == 1 and boutons[i][j]["text"] == "🚩":
                 ok += 1
-    print(ok)
     if ok == taille_de_la_grille**2 :
         print("Vous avez GAGNER")
         jeu_termine = True
